@@ -19,7 +19,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "marwen.project.radioscope.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary true
         }
@@ -48,6 +48,7 @@ android {
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            exclude 'META-INF/*'
         }
     }
     namespace 'marwen.project.radioscope'
@@ -146,7 +147,7 @@ dependencies {
     testImplementation "com.linkedin.dexmaker:dexmaker-mockito:2.28.3"
     testImplementation "io.mockk:mockk:1.13.1"
     testImplementation 'org.mockito:mockito-core:3.9.0' // Mockito framework
-    testImplementation 'org.mockito:mockito-inline:2.25.0' // mock final classes
+    testImplementation 'org.mockito:mockito-inline:3.9.0' // mock final classes
     testImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
     kaptTest 'com.google.dagger:hilt-android-compiler:2.38.1'
 
@@ -164,11 +165,15 @@ dependencies {
     androidTestImplementation "com.google.truth:truth:1.0.1"
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation "org.mockito:mockito-core:3.9.0"
     androidTestImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
     kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.38.1'
     androidTestImplementation 'com.linkedin.dexmaker:dexmaker-mockito:2.28.3'
-    androidTestImplementation "io.mockk:mockk:1.13.1"
+    androidTestImplementation "androidx.navigation:navigation-testing:2.5.3"
+    androidTestImplementation "io.mockk:mockk-android:1.13.1"
+    androidTestImplementation 'org.mockito:mockito-core:3.9.0'
+    //androidTestImplementation "org.mockito:mockito-inline:3.9.0"
+    //androidTestImplementation 'org.mockito:mockito-android:3.9.0'
+
 }
 kapt {
     correctErrorTypes true

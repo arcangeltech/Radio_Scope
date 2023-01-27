@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -32,6 +33,7 @@ fun RadioItem(radio: Radio,list: List<Radio>, onRecipeClick: (List<Radio>,Radio)
         modifier = Modifier
             .requiredHeight(200.dp)
             .requiredWidth(160.dp)
+            .testTag(Radio.name)
             .clickable { onRecipeClick(list,radio) },
         shape = RoundedCornerShape(20.dp)
     ){

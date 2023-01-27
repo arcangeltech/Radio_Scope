@@ -12,7 +12,7 @@ import marwen.project.radioscope.utils.Resource
 import javax.inject.Inject
 
 @HiltViewModel
-class AccueilViewModel @Inject constructor(private val getRadioHomeRadioUseCase: GetHomeRadioUseCase) :ViewModel(){
+open class AccueilViewModel @Inject constructor(private val getRadioHomeRadioUseCase: GetHomeRadioUseCase) :ViewModel(){
     val _state = mutableStateOf(AccueilHomeState())
     val state: State<AccueilHomeState> = _state
 
@@ -20,7 +20,7 @@ class AccueilViewModel @Inject constructor(private val getRadioHomeRadioUseCase:
         getRadios()
     }
 
-    fun getRadios() {
+    open fun getRadios() {
         var result = getRadioHomeRadioUseCase.invoke()
         result.onEach { result ->
             when (result) {
