@@ -5,14 +5,18 @@ import android.os.Bundle
 import android.os.Parcelable
 import androidx.annotation.RequiresApi
 import androidx.navigation.NavType
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.Gson
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
+@Entity(tableName = "radio_table")
 data class Radio(
     val country_id: Int,
     val country_name: String,
     val genre: String,
+    @PrimaryKey
     val radio_id: Int,
     val radio_image: String,
     val radio_name: String,

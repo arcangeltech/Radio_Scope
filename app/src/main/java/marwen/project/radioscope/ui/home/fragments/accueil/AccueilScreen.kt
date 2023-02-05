@@ -66,8 +66,8 @@ fun AccueilScreen(homeNavController: NavHostController, mainNavController: NavCo
 
                 }
             }
-            val onRadioClick = { listradio:List<Radio>,radio: Radio ->
-                val productJson = Uri.encode(Gson().toJson(ListenParameters(listradio,radio)))
+            val onRadioClick = { listRadio:List<Radio>,radio: Radio ->
+                val productJson = Uri.encode(Gson().toJson(ListenParameters(listRadio,radio)))
                 mainNavController.navigate("ListenScreen/$productJson")
             }
 

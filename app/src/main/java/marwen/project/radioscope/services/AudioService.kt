@@ -95,9 +95,6 @@ class AudioService : LifecycleService() {
     private var mediaSession: MediaSessionCompat? = null
     private var mediaSessionConnector: MediaSessionConnector? = null
 
-    /*private val _playerStatusLiveData = MutableLiveData<PlayerStatus>()
-    val playerStatusLiveData: LiveData<PlayerStatus>
-        get() = _playerStatusLiveData*/
     private val _playerStatusLiveData = mutableStateOf(PlayerStatus())
     val playerStatusLiveData: State<PlayerStatus> = _playerStatusLiveData
 
