@@ -21,6 +21,8 @@ import androidx.navigation.compose.rememberNavController
 import marwen.project.radioscope.R
 import marwen.project.radioscope.ui.home.fragments.accueil.AccueilScreen
 import marwen.project.radioscope.ui.home.fragments.favorite.FavoriteScreen
+import marwen.project.radioscope.ui.home.fragments.search.SearchScreen
+import marwen.project.radioscope.ui.theme.background
 import marwen.project.radioscope.ui.theme.background2
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -54,10 +56,10 @@ fun Navigation(homeNavController: NavHostController, mainNavController: NavContr
         composable(NavigationItem.Favorite.route) {
             FavoriteScreen(homeNavController,mainNavController )
         }
-        /*composable(NavigationItem.Shopping.route) {
-            ShoppingScreen(homeNavController,mainNavController)
+        composable(NavigationItem.Search.route) {
+            SearchScreen(homeNavController,mainNavController)
         }
-        composable(NavigationItem.MealPlan.route) {
+        /*composable(NavigationItem.MealPlan.route) {
             MealPlannerScreen(homeNavController,mainNavController )
         }
         composable(NavigationItem.Profile.route) {
@@ -78,7 +80,7 @@ fun BottomNavigationBar(homeNavController: NavController) {
     BottomNavigation(
         backgroundColor = background2,
         modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(15.dp, 15.dp, 0.dp, 0.dp)),
-        contentColor = Color.White
+        contentColor = background
 
     ) {
         val navBackStackEntry by homeNavController.currentBackStackEntryAsState()

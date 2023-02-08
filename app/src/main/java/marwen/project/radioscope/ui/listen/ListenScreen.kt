@@ -1,5 +1,6 @@
 package marwen.project.radioscope.ui.listen
 
+import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
 import android.content.ServiceConnection
@@ -38,6 +39,8 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import marwen.project.radioscope.data.local.ListenParameters
 import marwen.project.radioscope.data.remote.dto.Radio
@@ -64,8 +67,11 @@ inline fun ListenScreen(mainNavController: NavController,  listenParameters:List
     var state by remember {
         mutableStateOf(audioService?.playerStatusLiveData?.value)
     }
+
     /*LaunchedEffect(Unit) {
-        state = audioService?.playerStatusLiveData
+        launch {
+            snapshotFlow { state }.collect()
+        }
 
     }*/
     var command = remember {mutableStateOf("")}
@@ -143,7 +149,7 @@ inline fun ListenScreen(mainNavController: NavController,  listenParameters:List
                 Icon(
                     modifier = Modifier
                         .size(20.dp)
-                        .clickable { viewModel.addFavorite(radio = listenParameters.radio)},
+                        .clickable { viewModel.addFavorite(radio = listenParameters.radio) },
                     tint = header,
                     imageVector = Icons.Outlined.FavoriteBorder,
                     contentDescription = "favorite"

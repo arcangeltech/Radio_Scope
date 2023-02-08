@@ -3,6 +3,7 @@ package marwen.project.radioscope.repositories
 import marwen.project.radioscope.data.remote.dto.Country
 import marwen.project.radioscope.data.remote.dto.Radio
 import marwen.project.radioscope.data.remote.dto.RadioHomeDto
+import marwen.project.radioscope.data.remote.dto.RadioSearchDto
 
 class RadioScopeRepositoryFake: RadioScopeRepository {
     override suspend fun getHomeRadioList(): RadioHomeDto {
@@ -130,5 +131,57 @@ class RadioScopeRepositoryFake: RadioScopeRepository {
 
 
 
+    }
+
+    override suspend fun getSearchRadioList(search:String,count: String?, page: String?): RadioSearchDto {
+        return RadioSearchDto(
+            status="ok",
+            count=10,
+            count_total=25,
+            pages=2,
+            stations =  listOf(
+                Radio(
+                    radio_id = 56581,
+                    radio_name = "RUM - Radio Universitaria do Minho",
+                    radio_image ="https://visitdpstudio.net/radio_world/upload/36032912-2022-03-16.png",
+                    radio_url ="http://centova.radios.pt:9558/stream",
+                    genre="Talk",
+                    country_name= "Portugal",
+                    country_id= 76
+                ),Radio(
+                    radio_id = 56582,
+                    radio_name = "RUM - Radio Universitaria do Minho",
+                    radio_image ="https://visitdpstudio.net/radio_world/upload/36032912-2022-03-16.png",
+                    radio_url ="http://centova.radios.pt:9558/stream",
+                    genre="Talk",
+                    country_name= "Portugal",
+                    country_id= 76
+                ),Radio(
+                    radio_id = 56583,
+                    radio_name = "RUM - Radio Universitaria do Minho",
+                    radio_image ="https://visitdpstudio.net/radio_world/upload/36032912-2022-03-16.png",
+                    radio_url ="http://centova.radios.pt:9558/stream",
+                    genre="Talk",
+                    country_name= "Portugal",
+                    country_id= 76
+                ),Radio(
+                    radio_id = 56584,
+                    radio_name = "RUM - Radio Universitaria do Minho",
+                    radio_image ="https://visitdpstudio.net/radio_world/upload/36032912-2022-03-16.png",
+                    radio_url ="http://centova.radios.pt:9558/stream",
+                    genre="Talk",
+                    country_name= "Portugal",
+                    country_id= 76
+                ),Radio(
+                    radio_id = 56585,
+                    radio_name = "RUM - Radio Universitaria do Minho",
+                    radio_image ="https://visitdpstudio.net/radio_world/upload/36032912-2022-03-16.png",
+                    radio_url ="http://centova.radios.pt:9558/stream",
+                    genre="Talk",
+                    country_name= "Portugal",
+                    country_id= 76
+                ))
+
+        )
     }
 }
