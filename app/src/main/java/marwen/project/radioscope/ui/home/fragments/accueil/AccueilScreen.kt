@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,6 +38,7 @@ fun AccueilScreen(homeNavController: NavHostController, mainNavController: NavCo
         .padding(bottom = 50.dp)
         .background(background)) {
         LazyVerticalGrid(
+            modifier = Modifier.testTag("listRadiosHome"),
             columns=GridCells.Adaptive(minSize = 160.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
             contentPadding = PaddingValues(8.dp)){
@@ -64,8 +66,8 @@ fun AccueilScreen(homeNavController: NavHostController, mainNavController: NavCo
 
                 }
             }
-            val onRadioClick = { listradio:List<Radio>,radio: Radio ->
-                val productJson = Uri.encode(Gson().toJson(ListenParameters(listradio,radio)))
+            val onRadioClick = { listRadio:List<Radio>,radio: Radio ->
+                val productJson = Uri.encode(Gson().toJson(ListenParameters(listRadio,radio)))
                 mainNavController.navigate("ListenScreen/$productJson")
             }
 
@@ -125,6 +127,7 @@ fun AccueilScreen(homeNavController: NavHostController, mainNavController: NavCo
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .testTag("error")
                     .padding(horizontal = 20.dp)
                     .align(Alignment.Center)
             )

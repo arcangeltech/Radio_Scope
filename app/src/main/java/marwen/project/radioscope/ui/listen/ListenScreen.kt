@@ -1,5 +1,6 @@
 package marwen.project.radioscope.ui.listen
 
+import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
 import android.content.ServiceConnection
@@ -12,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +39,8 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import marwen.project.radioscope.data.local.ListenParameters
 import marwen.project.radioscope.data.remote.dto.Radio
@@ -53,11 +56,24 @@ import kotlin.math.absoluteValue
 @Composable
 inline fun ListenScreen(mainNavController: NavController,  listenParameters:ListenParameters, viewModel: ListenViewModel = hiltViewModel()
 ) {
+
+    //check favorite
+    val isFavorite= remember {
+        viewModel.isFavorite
+    }
+
     //player service
     var audioService: AudioService? = null
     var state by remember {
         mutableStateOf(audioService?.playerStatusLiveData?.value)
     }
+
+    /*LaunchedEffect(Unit) {
+        launch {
+            snapshotFlow { state }.collect()
+        }
+
+    }*/
     var command = remember {mutableStateOf("")}
     var playlist = remember {
         mutableStateOf(listenParameters)
@@ -103,7 +119,8 @@ inline fun ListenScreen(mainNavController: NavController,  listenParameters:List
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 10.dp)
+                .padding(horizontal = 10.dp),
+            horizontalArrangement = Arrangement.SpaceAround
         ) {
             Icon(
                 modifier = Modifier
@@ -115,11 +132,30 @@ inline fun ListenScreen(mainNavController: NavController,  listenParameters:List
             )
             Text(
                 "Playing",
-                modifier = Modifier.fillMaxWidth(),
                 color = header,
                 fontSize = 15.sp,
                 textAlign = TextAlign.Center
             )
+            if(isFavorite.value){
+                Icon(
+                    modifier = Modifier
+                        .size(20.dp)
+                        .clickable { viewModel.deleteFavorite(radio = listenParameters.radio) },
+                    tint = header,
+                    imageVector = Icons.Filled.Favorite,
+                    contentDescription = "favorite"
+                )
+            }else{
+                Icon(
+                    modifier = Modifier
+                        .size(20.dp)
+                        .clickable { viewModel.addFavorite(radio = listenParameters.radio) },
+                    tint = header,
+                    imageVector = Icons.Outlined.FavoriteBorder,
+                    contentDescription = "favorite"
+                )
+            }
+
         }
         var pagerState =  remember {
             PagerState(playlist.value.listRadio.indexOf(playlist.value.radio))
@@ -224,18 +260,18 @@ inline fun ListenScreen(mainNavController: NavController,  listenParameters:List
                                 command.value = "play"
                                 audioService?.exoPlayer?.play()
                                 val index = playlist.value.listRadio.indexOf(playlist.value.radio)
-                                if (index>0) {
+                                if (index > 0) {
                                     coroutineScope.launch {
-                                        pagerState.scrollToPage(index-1)
+                                        pagerState.scrollToPage(index - 1)
                                     }
                                     playlist.value =
                                         ListenParameters(
                                             playlist.value.listRadio,
-                                            playlist.value.listRadio.get(index-1)
+                                            playlist.value.listRadio.get(index - 1)
                                         )
                                     state = PlayerStatus(
                                         isPlaying = true,
-                                        radioId = playlist.value.listRadio.get(index-1).radio_id.toString()
+                                        radioId = playlist.value.listRadio.get(index - 1).radio_id.toString()
                                     )
                                 }
                             },
@@ -289,19 +325,19 @@ inline fun ListenScreen(mainNavController: NavController,  listenParameters:List
                                 command.value = "play"
                                 audioService?.exoPlayer?.play()
                                 val index = playlist.value.listRadio.indexOf(playlist.value.radio)
-                                if (index<playlist.value.listRadio.size-1) {
+                                if (index < playlist.value.listRadio.size - 1) {
                                     coroutineScope.launch {
-                                        pagerState.scrollToPage(index+1)
+                                        pagerState.scrollToPage(index + 1)
                                     }
 
                                     playlist.value =
                                         ListenParameters(
                                             playlist.value.listRadio,
-                                            playlist.value.listRadio.get(index+1)
+                                            playlist.value.listRadio.get(index + 1)
                                         )
                                     state = PlayerStatus(
                                         isPlaying = true,
-                                        radioId = playlist.value.listRadio.get(index+1).radio_id.toString()
+                                        radioId = playlist.value.listRadio.get(index + 1).radio_id.toString()
                                     )
                                 }
                             },
